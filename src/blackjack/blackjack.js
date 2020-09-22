@@ -38,6 +38,7 @@ const draw = async () => {
         div.appendChild(img)
     })
     chickenDinner()
+    whatADog()
     scoreCheck()
     dealerCheck()
 }
@@ -129,6 +130,16 @@ const chickenDinner = async () => {
     z = scores[1].charAt(0)
     if (((y === 'J' || y === 'Q'|| y === 'K' || y === '0') && (z === 'A')) || (y === 'A') && (z === 'J' || z === 'Q' || z === 'K' || z === '0')){
             alert("winner winner chicken dinner")
+            return
+        } 
+}
+
+const whatADog = async () => {
+    let scores = dealerHand.map(data => data.code)
+    y = scores[0].charAt(0)
+    z = scores[1].charAt(0)
+    if (((y === 'J' || y === 'Q'|| y === 'K' || y === '0') && (z === 'A')) || (y === 'A') && (z === 'J' || z === 'Q' || z === 'K' || z === '0')){
+            alert("WHAT A DOG")
             return
         } 
 }

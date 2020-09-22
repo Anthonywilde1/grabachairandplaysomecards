@@ -1,0 +1,94 @@
+/*Added by yours truly*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Nav Styling */
+
+header {
+    background: rgb(14, 14, 14);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5rem;
+}
+
+.logo {
+    color: #ffd700;
+    width: 2rem;
+    padding: 1rem;
+}
+
+nav {
+    width: 40%;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style-type: none;
+    width: 80%;
+    padding: 0;
+}
+
+.nav-link {
+    color: gold;
+    text-decoration: none;
+}
+
+.active {
+    border: 1px solid gold;
+    padding: 0.3rem 0.5rem;
+}
+
+.title {
+    color: gold;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+body {
+    background-image: url("../img/free-vector-red-poker-background1.jpg");
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#playblackjack {
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+#stand {
+    
+    width: 25%;
+}
+#hit {
+    
+    margin-left: 25%;
+    width: 25%;
+    
+}
+.human {
+    display: flex;
+    align-items: center;  
+}
+
+#buttonz {
+    display: flex;
+    align-items: center;
+}

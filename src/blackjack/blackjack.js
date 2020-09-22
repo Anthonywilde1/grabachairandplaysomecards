@@ -22,7 +22,7 @@ const draw = async () => {
     const response = await fetch(draw_deck);
     const cards = await response.json()
     playerHand = [cards.cards[0], cards.cards[2]];
-    dealerHand = await [cards.cards[1], cards.cards[3]];
+    dealerHand = [cards.cards[1], cards.cards[3]];
     let images = playerHand.map(x => x.image)
     images.forEach(tag => {
         const div = document.getElementById('human')
@@ -121,3 +121,4 @@ const stand = async () => {
     stand()
 }
 document.getElementById("stand").addEventListener('click',stand)
+/* adding a line for a commit */

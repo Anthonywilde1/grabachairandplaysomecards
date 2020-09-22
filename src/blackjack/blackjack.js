@@ -37,6 +37,7 @@ const draw = async () => {
         img.src = tag
         div.appendChild(img)
     })
+    chickenDinner()
     scoreCheck()
     dealerCheck()
 }
@@ -98,13 +99,13 @@ const stand = async () => {
     scoreCheck()
     dealerCheck()
     if (dealerScore > 21){
-        alert("dealer sucks and has lost")
+        alert("Dealer sucks and has lost")
         return
     } else if (dealerScore > scoreCheck){
-        alert("house always wins baby")
+        alert("House always wins baby")
         return
     } else if (dealerScore > 18 && scoreCheck > dealerScore){
-        alert("you beat the dealer mad lad")
+        alert("You beat the dealer, mad lad")
         return
     } else if (dealerScore < 18){
     const draw_deck = `https://deckofcardsapi.com/api/deck/${await newDeck()}/draw/?count=1`
@@ -122,3 +123,12 @@ const stand = async () => {
 }
 document.getElementById("stand").addEventListener('click',stand)
 /* adding a line for a commit */
+const chickenDinner = async () => {
+    let scores = playerHand.map(data => data.code)
+    y = scores[0].charAt(0)
+    z = scores[1].charAt(0)
+    if (((y === 'J' || y === 'Q'|| y === 'K' || y === '0') && (z === 'A')) || (y === 'A') && (z === 'J' || z === 'Q' || z === 'K' || z === '0')){
+            alert("winner winner chicken dinner")
+            return
+        } 
+}

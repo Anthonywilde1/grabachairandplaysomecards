@@ -1,5 +1,8 @@
 let playerHand = []
 let score = 0
+let dealerScore = 0
+let dealerHand = []
+
 
 const newDeck = async () => {
     const new_deck_url = "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6";
@@ -10,35 +13,32 @@ const newDeck = async () => {
 
 
 const draw = async () => { 
+    playerHand = []
+    dealerHand = []
+    let pictureReset = document.querySelectorAll("img");
+    pictureReset.forEach(x => x.src = "")
+
     const draw_deck = `https://deckofcardsapi.com/api/deck/${await newDeck()}/draw/?count=4`
     const response = await fetch(draw_deck);
     const cards = await response.json()
     playerHand = [cards.cards[0], cards.cards[2]];
-    const dealerhand = await [cards.cards[1], cards.cards[3]];
-    //const playerpile = `https://deckofcardsapi.com/api/deck/${await newDeck()}/pile/playerpile/add/?cards=${playerhand.map(card => card.code).join(",")}`
-    //const dealerpile = `https://deckofcardsapi.com/api/deck/${await newDeck()}/pile/dealerpile/add/?cards=${dealerhand.map(card => card.code).join(",")}`
-    //console.log(playerhand)
-    const images = playerHand.map(data => data.image)
-    let card1 = document.getElementById("humancard1")
-    let card2 = document.getElementById("humancard2")
-    card1.src = images[0]
-    card2.src = images[1]
-    let dcard1 = document.getElementById("Computercard1")
-    let dcard2 = document.getElementById("Computercard1")
-    //dcard1.src = '../img/792166a01d9f4024b4eb51ae51b0b185.jpg'
-    //dcard2.src = '../img/792166a01d9f4024b4eb51ae51b0b185.jpg'
-    const scores = playerHand.map(data => data.code)
-    
-    scores.forEach(x => {
-        y = x.charAt(0)
-        if (y === 'J' || y === 'Q' || y === 'K' || y === '0') {
-            score += 10
-        } else if (y === 'A'){
-            score += 1
-        } else {
-            score += y/1
-        }
+    dealerHand = await [cards.cards[1], cards.cards[3]];
+    let images = playerHand.map(x => x.image)
+    images.forEach(tag => {
+        const div = document.getElementById('human')
+        let img = document.createElement('img')
+        img.src = tag
+        div.appendChild(img)
     })
+    let dimages = dealerHand.map(x => x.image)
+    dimages.forEach(tag => {
+        const div = document.getElementById('computer')
+        let img = document.createElement('img')
+        img.src = tag
+        div.appendChild(img)
+    })
+    scoreCheck()
+    dealerCheck()
 }
 
 document.getElementById("playblackjack").addEventListener('click',draw)
@@ -48,14 +48,21 @@ const hit = async () => {
     const response = await fetch(draw_deck)
     const card = await response.json()
     playerHand.push(card.cards[0])
+    let images = playerHand.map(x => x.image)
+    let latest = images.slice(-1)
+    const div = document.getElementById('human')
+    let img = document.createElement('img')
+    img.src = latest
+    div.appendChild(img)
     scoreCheck()
 }
 
 document.getElementById("hit").addEventListener('click', hit)
 
 const scoreCheck = async () => {
+    score = 0
 
-    const scores = playerHand.map(data => data.code)
+    let scores = playerHand.map(data => data.code)
     
     scores.forEach(x => {
         y = x.charAt(0)
@@ -68,58 +75,49 @@ const scoreCheck = async () => {
         }
     })
     if (score > 21) {
-        //come back later
+       alert("you have gone bust") //come back later
     }
 }
-// const test = async () => {
-//     console.log(await draw())
-// }
+const dealerCheck = async () => {
+    dealerScore = 0
+    let dScores = dealerHand.map(data => data.code)
+    
+    dScores.forEach(x => {
+        y = x.charAt(0)
+        if (y === 'J' || y === 'Q' || y === 'K' || y === '0') {
+            dealerScore += 10
+        } else if (y === 'A'){
+            dealerScore += 1
+        } else {
+            dealerScore += y/1
+        }
+    })
+}
 
-// test()
-
-// const playerhand = async() => {
-//     const url = await draw();
-//     // const response = await fetch(url); 
-//     // console.log(response)
-//     // const yourhand = await response.json();
-//     // return yourhand
-
-//     let yourhand = await fetch(url).then(response => response.json()).then(data => data)
-//     console.log(yourhand)
-// }
-// // console.log(playerhand())
-// playerhand()
-
-
-// const getCardsOnSCreen = async () => {
-//         const playerhand = await draw()
-//         //console.log(playerhand)
-//         const codes = playerhand.map(data => data.image)
-//         let card1 = document.getElementById("humancard1")
-//         let card2 = document.getElementById("humancard2")
-//         card1.src = codes[0]
-//         card2.src = codes[1]
-//         let dcard1 = document.getElementById("Computercard1")
-//         let dcard2 = document.getElementById("Computercard1")
-//         dcard1.src = '../img/792166a01d9f4024b4eb51ae51b0b185.jpg'
-//         dcard2.src = '../img/792166a01d9f4024b4eb51ae51b0b185.jpg' 
-// }
-
-
-// const scoreCounter = async () => {
-//     let score = 0
-//     const playerhand = await draw()
-//     const cards = playerhand.map(data => data.code)
-//     cards.forEach(s => {
-//         let point = s.charAt(0) // A
-//         if (point === 'A'){
-//              score += 1 // score += 1
-//         } else if (point === 'J' || point === 'Q' || point === 'K'){
-//              score += 10
-//         } else {
-//              score += point/1
-//         }
-//     }) 
-//     console.log(score)
-// }
-// scoreCounter()
+const stand = async () => {
+    scoreCheck()
+    dealerCheck()
+    if (dealerScore > 21){
+        alert("dealer sucks and has lost")
+        return
+    } else if (dealerScore > scoreCheck){
+        alert("house always wins baby")
+        return
+    } else if (dealerScore > 18 && scoreCheck > dealerScore){
+        alert("you beat the dealer mad lad")
+        return
+    } else if (dealerScore < 18){
+    const draw_deck = `https://deckofcardsapi.com/api/deck/${await newDeck()}/draw/?count=1`
+    const response = await fetch(draw_deck)
+    const card = await response.json()
+    dealerHand.push(card.cards[0])
+    let images = dealerHand.map(x => x.image)
+    let latest = images.slice(-1)
+    const div = document.getElementById('computer')
+    let img = document.createElement('img')
+    img.src = latest
+    div.appendChild(img)
+    }
+    stand()
+}
+document.getElementById("stand").addEventListener('click',stand)

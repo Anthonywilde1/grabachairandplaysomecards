@@ -6,50 +6,24 @@ class Deck {
       .then((response) => response.json())
       .then((data) => data.deck_id);
 
+    this.playerHand = [];
+    this.computerHand = [];
   }
 
+  async draw() {
+    const drawPlayerHandUrl = `https://deckofcardsapi.com/api/deck/${await this
+      .id}/draw/?count=${7}`;
+    const drawComputerHandUrl = `https://deckofcardsapi.com/api/deck/${await this
+      .id}/draw/?count=${7}`;
 
-
-  async draw(n) {
-    let url = `https://deckofcardsapi.com/api/deck/${await this.id}/draw/?count=${n}`;
-    let cardCodes = await fetch(url)
+    const playerCards = await fetch(drawPlayerHandUrl)
       .then((response) => response.json())
-      .then((data) => data.cards.map((card) => card.code));
-    
-      
-    return cardCodes;
-  }
-
-  async newPile(n, name) {
-    let codes = await this.draw(n);
-    let url = `https://deckofcardsapi.com/api/deck/${await this.id}/pile/${name}/add/?cards=${codes.join(",")}`;
-    let pile = await fetch(url)
+      .then((data) => data.cards);
+    const computerCards = await fetch(drawComputerHandUrl)
       .then((response) => response.json())
-      .then((data) => data);
-
-    return pile;
-  }
-
-  async listPile(name) {
-    let url = `https://deckofcardsapi.com/api/deck/${await this.id}/pile/${name}/list/`;
-    let pileList = await fetch(url)
-      .then((response) => response.json())
-      .then((data) => data);
-
-    return pileList.piles;
-  }
-
-  async pickupCard(name) {
-    let drawnCardCode = await this.draw(1);
-    console.log(drawnCardCode)
-    let url = `https://deckofcardsapi.com/api/deck/${await this.id}/pile/${name}/add/?cards=${drawnCardCode.join("")}`
-    let pile = fetch(url).then(response =>  response.json()).then(data => data)
-    return pile;
-  }
-
-  async currentPileSize(name) {
-    let url = `https://deckofcardsapi.com/api/deck/${await this.id}/pile/${name}/list/`
-    let pile = fetch(url).then(response =>  response.json()).then(data => data)
-    console.log(pile)
+      .then((data) => data.cards);
+    this.playerHand = playerCards;
+    this.computerHand = computerCards;
+    return [this.playerHand, this.computerHand];
   }
 }

@@ -1,7 +1,62 @@
 * {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-img {
+.card-image {
     width: 10rem;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Nav Styling */
+
+header {
+    background: rgb(14, 14, 14);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 5rem;
+}
+
+.logo {
+    color: #ffd700;
+    width: 2rem;
+    padding: 1rem;
+}
+
+nav {
+    width: 40%;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style-type: none;
+    width: 80%;
+    padding: 0;
+}
+
+.nav-link {
+    color: gold;
+    text-decoration: none;
+}
+
+.active {
+    border: 1px solid gold;
+    padding: 0.3rem 0.5rem;
+}
+
+.title {
+    color: gold;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

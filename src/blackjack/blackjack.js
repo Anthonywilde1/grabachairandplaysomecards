@@ -101,13 +101,16 @@ const stand = async () => {
     dealerCheck()
     if (dealerScore > 21){
         alert("Dealer sucks and has lost")
-        return
+        return;
     } else if (dealerScore > scoreCheck){
         alert("House always wins baby")
-        return
+        return;
+    } else if (dealerScore > 18 && scoreCheck < dealerScore){
+        alert("You have lost")
+        return;
     } else if (dealerScore > 18 && scoreCheck > dealerScore){
         alert("You beat the dealer, mad lad")
-        return
+        return;
     } else if (dealerScore < 18){
     const draw_deck = `https://deckofcardsapi.com/api/deck/${await newDeck()}/draw/?count=1`
     const response = await fetch(draw_deck)
@@ -130,7 +133,7 @@ const chickenDinner = async () => {
     z = scores[1].charAt(0)
     if (((y === 'J' || y === 'Q'|| y === 'K' || y === '0') && (z === 'A')) || (y === 'A') && (z === 'J' || z === 'Q' || z === 'K' || z === '0')){
             alert("winner winner chicken dinner")
-            return
+            return;
         } 
 }
 
@@ -140,6 +143,6 @@ const whatADog = async () => {
     z = scores[1].charAt(0)
     if (((y === 'J' || y === 'Q'|| y === 'K' || y === '0') && (z === 'A')) || (y === 'A') && (z === 'J' || z === 'Q' || z === 'K' || z === '0')){
             alert("WHAT A DOG")
-            return
+            return;
         } 
 }

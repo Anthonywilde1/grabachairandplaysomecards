@@ -77,7 +77,7 @@ const scoreCheck = async () => {
         }
     })
     if (score > 21) {
-       alert("you have gone bust") //come back later
+       alert("you have gone bust")
     }
 }
 const dealerCheck = async () => {

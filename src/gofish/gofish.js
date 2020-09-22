@@ -10,69 +10,42 @@ const newDeck = async () => {
 
 let deck = new Deck();
 
+const displayHands = async () => {
+  let computerHandDiv = document.querySelector(".computerHand");
+  let playerHandDiv = document.querySelector(".playerHand");
+  computerHandDiv.innerHTML = "";
+  playerHandDiv.innerHTML = "";
+
+  let hands = await deck.draw();
+  let playerHand = hands[0];
+  let computerHand = hands[1];
+
+  playerHand.forEach((card) => {
+    let img = document.createElement("img");
+    img.src = card.image;
+    img.className = "card-image";
+    playerHandDiv.appendChild(img);
+  });
+
+  computerHand.forEach((card) => {
+    let img = document.createElement("img");
+    img.src = card.image;
+    img.className = "card-image";
+    computerHandDiv.appendChild(img);
+  });
+
+  return [playerHand, computerHand];
+};
+
+const pickUp = async () => {
+  [playerhand, computerHand] = displayHands;
+  console.log(playerHand);
+};
+
+displayHands();
+pickUp();
+
 // TODO: Output decks onto the browser
-
-const showPlayerHand = async () => {
-  await deck.newPile(7, "playerHand");
-  let cardList = await deck.listPile("playerHand");
-  cardList.playerHand.cards.forEach((card) => {
-    let img = document.createElement("img");
-    img.setAttribute("class", "card-image")
-    img.src = card.image;
-    document.querySelector(".playerHand").appendChild(img);
-    return cardList.playerHand.cards;
-  });
-};
-
-const showComputerHand = async () => {
-  await deck.newPile(7, "computerHand");
-  let cardList = await deck.listPile("computerHand");
-  cardList.computerHand.cards.forEach((card) => {
-    let img = document.createElement("img");
-    img.setAttribute("class", "card-image")
-    img.src = card.image;
-    document.querySelector(".computerHand").appendChild(img);
-    return cardList.computerHand.cards;
-  });
-};
-
-const reDrawHands = async () => {
-  document.querySelector(".playerHand").innerHTML = ""
-  document.querySelector(".computerHand").innerHTML = ""
-  let computerCardList = await deck.listPile("computerHand");
-  computerCardList.computerHand.cards.forEach((card) => {
-    let img = document.createElement("img");
-    img.src = card.image;
-    document.querySelector(".computerHand").appendChild(img);
-    return computerCardList.computerHand.cards;
-  });
-
-  let playerCardList = await deck.listPile("playerHand");
-  playerCardList.playerHand.cards.forEach((card) => {
-    let img = document.createElement("img");
-    img.className = "card-image"
-    img.src = card.image;
-    document.querySelector(".playerHand").appendChild(img);
-  });
-  return playerCardList.playerHand.cards;
-}
-
-const pickupCard = async () => {
-  await deck.pickupCard("playerHand");
-  reDrawHands()
-};
-
-const pileSize = async () => {
-  console.log(await deck.currentPileSize("playerHand"))
-}
-
-
-
-
-showPlayerHand();
-showComputerHand();
-document.querySelector("button").addEventListener("click", pickupCard);
-pileSize()
 
 // * Draw cards from pickup pile
 

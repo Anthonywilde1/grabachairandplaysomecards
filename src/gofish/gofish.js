@@ -1,9 +1,11 @@
 let deck = new Deck();
 
+// TODO: Generate Number
 const generateNumber = () => {
   return Math.floor(Math.random() * 6);
 };
 
+// TODO: Render Player Card
 const renderPlayerCard = (card, renderLocation) => {
   // * Create Elements
   let cardDiv = document.createElement("div");
@@ -24,6 +26,7 @@ const renderPlayerCard = (card, renderLocation) => {
   renderLocation.appendChild(checkbox);
 };
 
+// TODO: Render Computer Card
 const renderComputerCard = (renderLocation) => {
   // * Create Elememt
   let img = document.createElement("img");
@@ -36,6 +39,7 @@ const renderComputerCard = (renderLocation) => {
   renderLocation.appendChild(img);
 };
 
+// TODO: Render Submit Button
 const renderSubmitButton = () => {
   // * Create Elememt
   let submitBtn = document.createElement("input");
@@ -48,6 +52,7 @@ const renderSubmitButton = () => {
   document.querySelector(".playerForm").appendChild(submitBtn);
 };
 
+// TODO: Render Cards to Screen
 const renderCardsToScreen = (playerHand, computerHand) => {
   // * Render Locations
   let computerHandDiv = document.querySelector(".computerHand");
@@ -60,22 +65,27 @@ const renderCardsToScreen = (playerHand, computerHand) => {
   // * Rendering Cards
   playerHand.forEach((card) => renderPlayerCard(card, playerHandForm));
   computerHand.forEach((card) => renderComputerCard(computerHandDiv));
+  renderSubmitButton();
 };
 
-const cardCheck = (playerHand, checkedIds) => {
+// TODO: Card Pair Check
+const cardPairCheck = (playerHand, checkedIds) => {
   // * Checks if the first character of the code (e.g. the "2" of "2H") of the cards checked, are equal
   if (checkedIds[0].charAt(0) === checkedIds[1].charAt(0)) {
     alert("Pair");
-    // *
-    playerHand = playerHand.filter(
-      (card) => checkedIds[0] !== card.code && checkedIds[1] !== card.code
-    );
-    checkedIds.splice(0, 2);
-
-    return playerHand;
+    playerHand.forEach((card) => {
+      if (checkedIds[0] === card.code || checkedIds[1] === card.code) {
+        const index = playerHand.indexOf(card);
+        playerHand.splice(index, 1);
+      }
+    });
   }
 };
 
+// TODO: singleCardCheck
+const singleCardCheck = () => {};
+
+// TODO: Go FIsh
 const goFish = async () => {
   let computerHandDiv = document.querySelector(".computerHand");
   let playerHandForm = document.querySelector(".playerForm");
@@ -87,7 +97,6 @@ const goFish = async () => {
 
   // how many cards are remaining in the deck
   let remaining = await deck.remaining();
-  console.log(remaining);
 
   //
   let playerHand = hands[0];
@@ -96,18 +105,15 @@ const goFish = async () => {
   renderCardsToScreen(playerHand, computerHand);
 
   // TODO: Form event listener
-  let form = document.querySelector(".playerForm");
-  let formCards = form.querySelectorAll("input");
-  let checkedIds = [];
+  const form = document.querySelector(".playerForm");
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    for (let ele of formCards) {
-      if (ele.checked) {
-        checkedIds.push(ele.id);
-      }
-    }
-    let filteredCards = cardCheck(playerHand, checkedIds);
-    renderCardsToScreen(filteredCards, computerHand);
+    const formCards = Array.from(form.querySelectorAll("input"));
+    console.log(typeof formCards);
+    const checkedIds = formCards.filter((x) => x.checked).map((x) => x.id);
+    cardPairCheck(playerHand, checkedIds);
+    renderCardsToScreen(playerHand, computerHand);
   });
 
   // TODO: Pickup

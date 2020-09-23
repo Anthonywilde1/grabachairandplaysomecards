@@ -59,46 +59,29 @@ nav {
     justify-content: space-between;
 }
 
-
-
 body {
-    background-image: url("../img/free-vector-red-poker-background1.jpg");
-    display: flex;
-    flex-direction: column;
+    background-image: url(/img/minimalistic-blue-poker-background-texture-co-card-symbols-64856610.jpg);
     
-}
-
-h2 {
-    margin-left: 2%;
-    color: white;
-}
-
-#playblackjack {
-    width: 50%;
-    margin-left: 25%;
-    margin-right: 25%;
-}
-#stand {
-    
-    width: 25%;
-}
-#hit {
-    
-    margin-left: 25%;
-    width: 25%;
-    
-}
-.human {
-    display: flex;
-    align-items: center;  
-}
-
-#buttonz {
-    margin-top: 2%;
-    display: flex;
     align-items: center;
 }
 
-#computer {
-    margin-bottom: 2%;
+h1 {
+    display: flex;
+    align-items: center;
+    margin-left: 25%;
+}
+
+h2 {
+    display: flex;
+    align-items: center;
+    margin-left: 40%;
+}
+
+a {
+    display: flex;
+    color: yellow;
+    margin-left: 47%;
+    padding-top: 10%;
+    font-weight: bold;
+    font-size: 150%;
 }

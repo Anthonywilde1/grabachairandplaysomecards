@@ -4,15 +4,14 @@
   box-sizing: border-box;
 }
 
-.card-image {
-  width: 10rem;
+.card-image,
+#pickup {
+  width: 9rem;
 }
 
 body {
   font-family: "Poppins", sans-serif;
-  background-image: url("./poker-table-background-green-color_47243-1068.jpg");
-  background-size: cover;
-  background-repeat: none;
+  background: rgb(24, 144, 24);
 }
 
 /* Nav Styling */
@@ -26,7 +25,6 @@ header {
 }
 
 .logo {
-  color: #ffd700;
   width: 2rem;
   padding: 1rem;
 }
@@ -45,7 +43,7 @@ nav {
 }
 
 .nav-link {
-  color: gold;
+  color: #ffd700;
   text-decoration: none;
 }
 
@@ -62,4 +60,34 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.computer {
+  border-radius: 0.5rem;
+  padding: 0.1rem;
+}
+
+#pickup {
+  border-radius: 0.5rem;
+  padding: 0.1rem;
+}
+
+.pickup {
+  margin: 0 auto;
+}
+
+.playerForm {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.computerHand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hand-name {
+  text-align: center;
 }

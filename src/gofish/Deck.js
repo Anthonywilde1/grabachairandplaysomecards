@@ -26,4 +26,23 @@ class Deck {
     this.computerHand = computerCards;
     return [this.playerHand, this.computerHand];
   }
+
+  async remaining() {
+    let remaining = fetch(
+      `https://deckofcardsapi.com/api/deck/${await this.id}/`
+    )
+      .then((response) => response.json())
+      .then((data) => data.remaining);
+
+    return remaining;
+  }
+
+  async drawCards(n) {
+    const drawOneUrl = `https://deckofcardsapi.com/api/deck/${await this
+      .id}/draw/?count=${n}`;
+    const card = fetch(drawOneUrl)
+      .then((response) => response.json())
+      .then((data) => data.cards);
+    return card;
+  }
 }
